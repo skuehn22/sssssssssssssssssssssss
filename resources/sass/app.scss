@@ -1,0 +1,412 @@
+// Fonts
+@import url('https://fonts.bunny.net/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import 'bootstrap/scss/bootstrap';
+
+
+body, html {
+    font-family: Arial, sans-serif;
+}
+
+
+/* Normal state */
+.btn-primary {
+    background-color: #49aedb;
+    border: 0;
+    font-size: 17px;
+    border-radius: 12px;
+    padding: 13px 14px 13px 14px;
+
+}
+
+.btn-primary:disabled {
+    border: 0;
+    font-size: 17px;
+    border-radius: 12px;
+    padding: 13px 14px 13px 14px;
+}
+
+.btn-success {
+    border: 0;
+    font-size: 17px;
+    border-radius: 12px;
+    padding: 13px 14px 13px 14px;
+
+}
+
+.btn-danger{
+    font-size: 17px;
+    border-radius: 12px;
+    padding: 13px 14px 13px 14px;
+
+}
+
+.btn-danger:hover{
+    font-size: 17px;
+    border-radius: 12px;
+    padding: 13px 14px 13px 14px;
+
+}
+
+
+.btn-secondary{
+    font-size: 17px;
+    border-radius: 12px;
+    padding: 13px 14px 13px 14px;
+
+}
+
+.btn-secondary:hover{
+    font-size: 17px;
+    border-radius: 12px;
+    padding: 13px 14px 13px 14px;
+
+}
+
+/* Hover state */
+.btn-primary:hover {
+    background-color: #308dc7; /* A darker shade of the normal state */
+    border: 0;
+    font-size: 16px;
+    border-radius: 12px;
+    padding: 13px 14px 13px 14px;
+}
+
+/* Focus state */
+.btn-primary:focus {
+    background-color: #308dc7; /* Same as hover state */
+    border: 0;
+    box-shadow: 0 0 0 0.2rem rgba(73, 174, 219, 0.5); /* An outline with the color of the button */
+    font-size: 16px;
+    border-radius: 12px;
+    padding: 13px 14px 13px 14px;
+}
+
+/* Active state (button is being clicked) */
+.btn-primary:active {
+    background-color: #1d6da3; /* An even darker shade */
+    border: 0;
+    font-size: 16px;
+    border-radius: 12px;
+    padding: 13px 14px 13px 14px;
+}
+
+/* Disabled state */
+.btn-primary:disabled {
+    background-color: #49aedb;
+    border: 0;
+    opacity: 0.4; /* Same as your current disabled state */
+    font-size: 16px;
+    border-radius: 12px;
+    padding: 13px 14px 13px 14px;
+}
+
+/* Any other state that changes the background color */
+.btn-primary:not(:disabled):not(.disabled).active,
+.show > .btn-primary.dropdown-toggle {
+    background-color: #1d6da3; /* Same as active state */
+}
+
+.querformat{
+    display:none;
+}
+
+.bg-white{
+    background-color: #fff;
+    padding:10px;
+}
+
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.7);
+    z-index: 1000;
+}
+
+.spinner {
+    border: 8px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top: 8px solid black;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+
+.icon-check{
+    color: #32CD32;
+    font-size: 22px;
+}
+
+.icon-red{
+    color: #e51515;
+    font-size: 22px;
+}
+.custom-check + .custom-arrow {
+    margin-left: -5px;
+
+}
+
+.custom-check  {
+    padding-right: 18px;
+}
+
+
+.icon-check + .fa-arrow-right {
+    margin-left: -5px;
+}
+
+/* Replace the .icon-check and .icon-red with the following styles */
+.custom-square-check {
+    min-width: 20px;
+    height: 20px;
+    background-color: #32CD32;
+    cursor: pointer;
+    display: inline-block;
+    border-radius: 6px;
+    margin-right: 5px; /* added margin */
+}
+
+.custom-square-red {
+    min-width: 20px;
+    height: 20px;
+    background-color: #e51515;
+    cursor: pointer;
+    display: inline-block;
+    border-radius: 6px;
+    margin-right: 5px; /* added margin */
+}
+
+/* Adjust arrow positioning */
+.fa-arrow-right {
+    background-color: #009bd5;
+    color: #fff; /* Text color for the arrow, assuming you want white */
+    padding: 8px 10px; /* Adjust as needed to center the icon */
+    border-radius: 6px; /* To give the square rounded corners */
+    font-size: 16px;
+    vertical-align: middle;
+    margin-left: 15px;
+}
+
+/* Increase specificity by referencing the parent router-link as well */
+router-link .video-link,
+router-link .video-link *,
+router-link .video-link:hover,
+router-link .video-link:hover * {
+    text-decoration: none !important; /* Use !important to ensure this rule is applied */
+    color: gray;
+    font-weight: 600;
+}
+
+.video-link {
+    color: gray;
+    font-weight: 600;  /* increase font weight */
+    text-decoration: none;  /* remove underline */
+}
+.video-link i {
+    margin-right: 5px;
+}
+
+.custom-router-link, .custom-router-link:hover {
+    text-decoration: none !important; /* This will remove the underline */
+}
+
+/* Since you also want to style inner elements */
+.custom-router-link .video-link,
+.custom-router-link .video-link *,
+.custom-router-link .video-link:hover,
+.custom-router-link .video-link:hover * {
+    text-decoration: none !important; /* Ensure this rule is applied */
+    color: gray;
+    font-weight: 600;
+}
+
+
+.modal-delete{
+    margin: 0;
+    padding: 0;
+    border-radius: 0;
+}
+
+.modal-title{
+    font-weight: 700;
+}
+
+.modal-body p{
+    font-size: 18px;
+}
+
+.recording-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: red;
+}
+
+.dot {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-color: red;
+    border-radius: 50%;
+    margin-right: 8px;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0% {
+        opacity: 0.5;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.5;
+    }
+}
+
+.navbar-text {
+    color:#212529;
+}
+
+.card{
+    border-radius: 18px;
+    box-shadow: none!important;
+    border: none;
+}
+
+
+.login-blue-bar-left{
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+    overflow: hidden;
+    background-color: #009bd5
+}
+
+.login-blue-bar-right{
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    overflow: hidden;
+    background-color: #009bd5
+}
+
+.same-height {
+    height: 40px;
+}
+
+.same-height-btn {
+    height: 40px;
+    padding: 0px 14px;
+}
+
+.same-height-btn:hover {
+    padding: 0px 14px;
+}
+
+/* Focus state */
+.same-height-btn:focus {
+    padding: 0px 14px;
+}
+
+/* Active state (button is being clicked) */
+.same-height-btn:active {
+    padding: 0px 14px;
+}
+
+/* This will target only Safari */
+@media not all and (min-resolution:.001dpcm) {
+    @supports (-webkit-appearance:none) {
+        .safari-fix {
+            object-fit: contain;  /* This property helps maintain aspect ratio */
+        }
+    }
+}
+
+.btn-primary-less {
+    background-color: #49aedb;
+    border: 0;
+    font-size: 17px;
+    border-radius: 12px;
+    padding: 5px 14px 5px 14px;
+    color: #fff;
+
+}
+
+.btn-primary-less:disabled {
+    border: 0;
+    font-size: 17px;
+    border-radius: 12px;
+    padding: 5px 14px 5px 14px;
+    color: #fff;
+}
+
+
+
+/* Hover state */
+.btn-primary-less:hover {
+    background-color: #308dc7; /* A darker shade of the normal state */
+    border: 0;
+    font-size: 16px;
+    border-radius: 12px;
+    padding: 5px 14px 5px 14px;
+    color: #fff;
+}
+
+/* Focus state */
+.btn-primary-less:focus {
+    background-color: #308dc7; /* Same as hover state */
+    border: 0;
+    box-shadow: 0 0 0 0.2rem rgba(73, 174, 219, 0.5); /* An outline with the color of the button */
+    font-size: 16px;
+    border-radius: 12px;
+    padding: 5px 14px 5px 14px;
+    color: #fff;
+}
+
+/* Active state (button is being clicked) */
+.btn-primary-less:active {
+    background-color: #1d6da3; /* An even darker shade */
+    border: 0;
+    font-size: 16px;
+    border-radius: 12px;
+    padding: 5px 14px 5px 14px;
+    color: #fff;
+}
+
+/* Disabled state */
+.btn-primary-less:disabled {
+    background-color: #49aedb;
+    border: 0;
+    opacity: 0.4; /* Same as your current disabled state */
+    font-size: 16px;
+    border-radius: 12px;
+    padding: 5px 14px 5px 14px;
+    color: #fff;
+}
+
+.mr-10px {
+    margin-right: 10px;
+}
+
+.zu-videos{
+    font-size: 8px;
+    color: #fff!important;
+    padding:8px;
+}
