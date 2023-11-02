@@ -19,6 +19,7 @@ Route::get('/', function () {
 
 Auth::routes();
 Route::get('/notes', [App\Http\Controllers\NoteController::class, 'index']);
+Route::get('/api/topics', [App\Http\Controllers\NoteController::class, 'index']);
 Route::post('/notes', [App\Http\Controllers\NoteController::class, 'store']);
 Route::put('/notes/{note}', [App\Http\Controllers\NoteController::class, 'update']);
 Route::delete('/notes/{note}', [App\Http\Controllers\NoteController::class, 'destroy']);
