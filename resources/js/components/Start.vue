@@ -47,11 +47,26 @@
                             <input v-model="newNote[topic.id].content" placeholder="New note" class="form-control">
                             <button class="btn btn-outline-secondary" type="button" @click="addNote(topic.id)">Add</button>
                         </div>
+                        <div v-if="activeTopic.id === 21 && averageNote !== null">
+                            <p>Average Rate: {{ averageNote.toFixed(2) }}</p>
+                        </div>
                         <!-- Loop over notes in this topic -->
                         <div v-for="note in topic.notes" :key="note.id" class="mb-2 d-flex align-items-center justify-content-between">
-                            <p class="mb-0">{{ note.content }}</p>
-                            <i class="fas fa-trash text-danger" style="cursor:pointer;" @click="deleteNote(note.id)"></i>
+                            <div v-if="editingNoteId === note.id" class="d-flex align-items-center w-100">
+                                <input v-model="editingContent" class="form-control form-control-sm me-2" style="flex-grow: 1;">
+                                <i class="fas fa-save text-success me-2" style="cursor:pointer;" @click="updateNote(note.id)"></i>
+                                <i class="fas fa-times text-secondary" style="cursor:pointer;" @click="cancelEdit()"></i>
+                            </div>
+                            <div v-else class="d-flex align-items-center w-100">
+                                <p class="mb-0 flex-grow-1">{{ note.content }}</p>
+                                <span>
+            <i class="fas fa-edit text-primary me-2" style="cursor:pointer;" @click="editNote(note)"></i>
+            <i class="fas fa-trash text-danger" style="cursor:pointer;" @click="deleteNote(note.id)"></i>
+        </span>
+                            </div>
                         </div>
+
+
                     </div>
                 </div>
             </div>
@@ -80,13 +95,71 @@ export default {
             newNoteContent: '', // New note content
             showModal: false,
             openAccordionId: null,
-            activeTopic: null,
+            activeTopic: {
+                id: null, // Your logic for setting the active topic ID
+                // ...
+            },
+            averageNote: null,
+            notes: [],
+            editingNoteId: null,
+            editingContent: '',
         }
     },
     created() {
         this.fetchTopics();
     },
     methods: {
+        editNote(note) {
+            this.editingNoteId = note.id;
+            this.editingContent = note.content;
+        },
+
+        updateNote(noteId) {
+            if (!this.editingContent.trim()) {
+                alert("Please enter a note content.");
+                return;
+            }
+
+            axios.put(`/notes/${noteId}`, { content: this.editingContent })
+                .then(() => {
+                    this.fetchTopics(); // Refresh topics after updating a note
+                    this.editingNoteId = null; // Reset the editing note id
+                    this.editingContent = ''; // Reset the editing note content
+                })
+                .catch(error => {
+                    console.error("Error updating note:", error);
+                    alert("Failed to update note. Please try again.");
+                });
+        },
+        cancelEdit() {
+            this.editingNoteId = null;
+            this.editingContent = '';
+        },
+        calculateAverageNote() {
+            if (this.activeTopic.id === 21) {
+                let sum = 0;
+                let count = 0;
+
+                // Ensure that we are accessing notes from the active topic
+                for (const note of this.activeTopic.notes) {
+                    const noteValue = parseFloat(note.content); // Assuming 'content' holds the note text
+                    if (!isNaN(noteValue) && note.content.toString().match(/^\d+\.\d+$/)) {
+                        console.log(noteValue);
+                        sum += noteValue;
+                        count++;
+                    }
+                }
+
+                console.log(sum);
+
+                if (count > 0) {
+                    this.averageNote = sum / count;
+                } else {
+                    this.averageNote = null; // Set to null if no notes match the criteria
+                }
+            }
+        },
+
         fetchTopics() {
             axios.get('/api/topics')
                 .then(response => {
@@ -95,11 +168,19 @@ export default {
                     this.topics.forEach(topic => {
                         this.newNote[topic.id] = { title: '', content: '' };
                     });
+                    // Update activeTopic if it has been fetched again
+                    if (this.activeTopic && this.activeTopic.id) {
+                        const active = this.topics.find(t => t.id === this.activeTopic.id);
+                        if (active) {
+                            this.setActiveTopic(active);
+                        }
+                    }
                 })
                 .catch(error => {
                     console.error("Error fetching topics:", error);
                 });
         },
+
         toggleAccordion(topicId) {
             // If the current topicId is the same as the openAccordionId, set it to null to close the accordion
             // Otherwise, set the openAccordionId to the current topicId to open the accordion
@@ -134,29 +215,44 @@ export default {
         },
 
         addNote(topicId) {
-            const noteContent = this.newNote[topicId].content.trim();
+            let noteContent = this.newNote[topicId].content.trim();
+
+            // Format the note content for topic 21 to ensure one decimal place
+            if (topicId === 21) {
+                // Parse the note content as a float and check if it's an integer
+                const noteValue = parseFloat(noteContent);
+                if (!isNaN(noteValue) && parseInt(noteValue, 10) === noteValue) {
+                    // If it's an integer, format to one decimal place
+                    noteContent = `${noteValue.toFixed(1)}`;
+                }
+            }
+
             if (!noteContent) {
                 alert("Please enter a note content.");
                 return;
             }
+
             axios.post('/store/notes', { content: noteContent, topic_id: topicId })
                 .then(() => {
                     this.fetchTopics(); // Refresh topics after adding a note
                     this.newNote[topicId].content = ''; // Reset the note content for this topic
+                    if (topicId === 21) {
+                        this.calculateAverageNote(); // Recalculate the average if the note was added to topic 21
+                    }
                 })
                 .catch(error => {
                     console.error("Error adding note:", error);
                     alert("Failed to add note. Please try again.");
                 });
         },
-        editNote(note) {
-            // Implementation for editing a note
-        },
+
+
         deleteNote(id) {
             axios.delete(`/notes/${id}`)
                 .then(() => {
                     this.fetchTopics(); // Refresh topics after deleting a note
                 });
+            this.calculateAverageNote();
         },
         deleteTopic(id) {
             if (confirm("Are you sure you want to delete this topic?")) {
@@ -171,24 +267,28 @@ export default {
         },
         setActiveTopic(topic) {
             this.activeTopic = topic;
+            // This is critical: Whenever the active topic is set, recalculate the notes average.
+            this.calculateAverageNote();
         },
+
     },
     watch: {
-        showModal(value) {
-            if (value) {
-                this.$nextTick(() => {
-                    document.body.classList.add('modal-open');
-                    document.getElementById('addNoteModal').style.display = 'block';
-                    document.getElementById('addNoteModal').classList.add('show');
-                });
-            } else {
-                document.body.classList.remove('modal-open');
-                if (document.getElementById('addNoteModal')) {
-                    document.getElementById('addNoteModal').style.display = 'none';
-                    document.getElementById('addNoteModal').classList.remove('show');
-                }
-            }
-        }
+        // Watcher for the activeTopic.id or notes array if they can change
+        'activeTopic.id': function (newVal, oldVal) {
+            // Call calculateAverageNote whenever the active topic ID changes
+            this.calculateAverageNote();
+        },
+        notes: {
+            handler() {
+                // Call calculateAverageNote whenever the notes array changes
+                this.calculateAverageNote();
+            },
+            deep: true,
+        },
+    },
+    mounted() {
+        // Call calculateAverageNote on component mount
+        this.calculateAverageNote();
     },
     computed: {
         isTopicActiveAndOpen() {
