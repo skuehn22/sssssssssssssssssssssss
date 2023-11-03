@@ -16,7 +16,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'onTour App'),
+    'name' => env('APP_NAME', 'Tak Tak List App'),
 
     /*
     |--------------------------------------------------------------------------

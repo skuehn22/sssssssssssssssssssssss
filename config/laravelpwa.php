@@ -1,9 +1,9 @@
 <?php
 
 return [
-    'name' => 'onTour App',
+    'name' => 'Tak Tak List App',
     'manifest' => [
-        'name' => env('APP_NAME', 'onTour App'),
+        'name' => env('APP_NAME', 'Tak Tak List App'),
         'short_name' => 'onTour',
         'start_url' => 'https://app.ontour.org',
         'background_color' => '#ffffff',
