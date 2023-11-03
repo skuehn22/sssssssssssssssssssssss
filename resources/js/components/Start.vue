@@ -22,7 +22,7 @@
 
 
         <div class="d-flex justify-content-between mb-3">
-            <input v-model="newTopic.title" placeholder="Topic Title" class="form-control me-2">
+            <input v-model="newTopic.title" placeholder="List Title" class="form-control me-2">
             <button @click="addTopic" class="btn btn-primary">Add</button>
         </div>
 
@@ -47,19 +47,23 @@
                             <input v-model="newNote[topic.id].content" placeholder="New note" class="form-control">
                             <button class="btn btn-outline-secondary" type="button" @click="addNote(topic.id)">Add</button>
                         </div>
+                        <!-- Display the formatted date here -->
+                        <div v-if="topic.date" class="topic-date pb-3">
+                            Date: {{ formatDate(topic.date) }}
+                        </div>
+
+
                         <div v-if="activeTopic.id === 21 && averageNote !== null">
                             <p>Average Rate: {{ averageNote.toFixed(2) }}</p>
                         </div>
                         <!-- Loop over notes in this topic -->
-                        <div v-for="note in topic.notes" :key="note.id" class="mb-2 d-flex align-items-center justify-content-between">
+                        <div v-for="note in topic.notes" :key="note.id" class="mb-2 note-and-icons">
                             <div v-if="editingNoteId === note.id" class="d-flex align-items-center w-100">
-                                <input v-model="editingContent" class="form-control form-control-sm me-2" style="flex-grow: 1;">
-                                <i class="fas fa-save text-success me-2" style="cursor:pointer;" @click="updateNote(note.id)"></i>
-                                <i class="fas fa-times text-secondary" style="cursor:pointer;" @click="cancelEdit()"></i>
+                                <!-- Edit input field and icons here -->
                             </div>
                             <div v-else class="d-flex align-items-center w-100">
-                                <p class="mb-0 flex-grow-1">{{ note.content }}</p>
-                                <span>
+                                <p class="mb-0 note-content flex-grow-1">{{ topic.id === 20 ? '- ' + note.content : note.content }}</p>
+                                <span class="icon-container"> <!-- Updated class -->
             <i class="fas fa-edit text-primary me-2" style="cursor:pointer;" @click="editNote(note)"></i>
             <i class="fas fa-trash text-danger" style="cursor:pointer;" @click="deleteNote(note.id)"></i>
         </span>
@@ -96,19 +100,29 @@ export default {
             showModal: false,
             openAccordionId: null,
             activeTopic: {
-                id: null, // Your logic for setting the active topic ID
-                // ...
+                id: null,
+                name: '',
             },
             averageNote: null,
             notes: [],
             editingNoteId: null,
             editingContent: '',
+            activeDropdownTopicId: null,
+
         }
     },
     created() {
         this.fetchTopics();
     },
     methods: {
+        formatDate(dateString) {
+            const event = new Date(dateString);
+            const day = event.getDate().toString().padStart(2, '0');
+            const month = (event.getMonth() + 1).toString().padStart(2, '0'); // +1 because months are 0-indexed
+            const year = event.getFullYear();
+
+            return `${day}.${month}.${year}`;
+        },
         editNote(note) {
             this.editingNoteId = note.id;
             this.editingContent = note.content;
@@ -182,9 +196,12 @@ export default {
         },
 
         toggleAccordion(topicId) {
-            // If the current topicId is the same as the openAccordionId, set it to null to close the accordion
-            // Otherwise, set the openAccordionId to the current topicId to open the accordion
             this.openAccordionId = this.openAccordionId === topicId ? null : topicId;
+            if (this.openAccordionId) {
+                this.setActiveTopic(this.topics.find(topic => topic.id === topicId));
+            } else {
+                this.activeTopic = { id: null, name: '' }; // Reset activeTopic when accordion is closed
+            }
         },
         addTopic() {
             // Check if the newTopic has a title
@@ -267,7 +284,6 @@ export default {
         },
         setActiveTopic(topic) {
             this.activeTopic = topic;
-            // This is critical: Whenever the active topic is set, recalculate the notes average.
             this.calculateAverageNote();
         },
 
@@ -292,7 +308,8 @@ export default {
     },
     computed: {
         isTopicActiveAndOpen() {
-            return this.activeTopic && this.openAccordionId === this.activeTopic.id;
+            // This should return true only if there is an active topic and the accordion for that topic is open.
+            return this.activeTopic.id !== null && this.openAccordionId === this.activeTopic.id;
         }
     },
 
@@ -308,6 +325,27 @@ export default {
     right: 0; /* Align to the right */
     left: auto; /* Remove the default left alignment */
 }
+
+.note-content {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: auto; /* Push the icons to the right */
+}
+
+.icon-container {
+    white-space: nowrap; /* Ensure icons do not wrap */
+}
+
+/* This will ensure the note text and icons are aligned in a single line */
+.note-and-icons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Additional scoped styling if necessary */
+
 
 /* Additional scoped styling if necessary */
 </style>

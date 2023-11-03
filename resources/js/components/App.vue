@@ -8,7 +8,7 @@
                 </a>
 
                 <!-- Display the heading here -->
-                <span class="navbar-text mx-auto" style="font-weight: 900; font-size: 21px;"><strong>{{ heading }}</strong></span>
+                <span class="navbar-text mx-auto" style="font-weight: 900; font-size: 21px;"><strong>{{ heading }}   <i class="fas fa-heart text-danger me-2" style="cursor:pointer;"></i> <!-- Heart icon added here --></strong></span>
 
                 <a class="nav-link" @click="showLogoutConfirmation">
                     <img src="/images/ausloggen.png" style="width: 29px; padding-right:5px;">
@@ -104,7 +104,7 @@ export default {
         const { open, close } = useModal({
             component: ModalInfo,
             attrs: {
-                title: 'Abmelden',
+                title: 'Ciao Ciao',
                 onConfirm() {
                     confirmLogout() // logout the user when "Ja" is clicked
                 },
@@ -113,7 +113,7 @@ export default {
                 },
             },
             slots: {
-                default: '<p>Möchtet Ihr Euch wirklich abmelden?</p>',
+                default: '<p>Sure to tak tak ciao?</p>',
             },
         });
 

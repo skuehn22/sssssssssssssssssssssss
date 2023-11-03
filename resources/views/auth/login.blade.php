@@ -39,6 +39,13 @@
     </div>
 
 
+    <div class="row justify-content-center align-items-center bg-white" style="height: 10vh;">
+        <div class="col-12 text-center">
+            <div class="my-auto">
+                <h1>Tak-Tak List App</h1> <!-- You can use h1-h6 depending on the importance and desired size -->
+            </div>
+        </div>
+    </div>
 
     <div class="row justify-content-center bg-white">
         <div class="col-md-12">

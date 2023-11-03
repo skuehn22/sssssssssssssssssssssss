@@ -22,9 +22,9 @@ const emit = defineEmits<{
         <slot />
 
         <div class="row">
-            <div class="col-6">   <button @click="emit('cancel')" class="btn btn-secondary" style="padding: 8px; width: 100%;">Abbrechen</button></div>
+            <div class="col-6">   <button @click="emit('cancel')" class="btn btn-secondary" style="padding: 8px; width: 100%;">Cancel</button></div>
             <div class="col-6">  <button @click="emit('confirm')" class="btn btn-primary" style="padding: 8px; width: 100%;">
-               Abmelden
+               Tak Tak
             </button></div>
         </div>
 
