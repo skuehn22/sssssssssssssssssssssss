@@ -9,20 +9,7 @@
 @section('content')
 
 <div class="container">
-    <div class="row">
-        <div class="col-12">
-            @if(request()->has('qr'))
-                <div class="alert alert-warning" role="alert">
-                    Bitte nutze den QR Code den du erhalten hast. Der von dir gescannte Code ist nur ein Beispiel.
-                </div>
-            @endif
-        </div>
-    </div>
-    <div class="row justify-content-center bg-white" style="padding-top:15%;">
-        <div class="col-12 d-flex justify-content-center align-items-center" style="height: 100px;"> <!-- Set a height -->
-            <img src="/images/videoproject.png" alt="Logo" class="img-fluid safari-fix" style="width: 90%; height: auto;">
-        </div>
-    </div>
+
 
 
 
@@ -32,9 +19,7 @@
     <div class="row justify-content-center bg-white" style="padding-top: 15%;">
         <div class="col-md-12">
             <div id="qrCode2">
-                <div class="div" id="qrCodeImage">
-                    <img src="/images/qr-banner.PNG" alt="Logo" class="img-fluid">
-                </div>
+
 
 
                 <video id="preview" playsinline style="display: none; max-width: 100%; margin-bottom: 20px;"></video>
@@ -54,11 +39,7 @@
     </div>
 
 
-    <div class="row justify-content-center bg-white">
-        <div class="col-12 d-flex justify-content-center">
-           oder
-        </div>
-    </div>
+
     <div class="row justify-content-center bg-white">
         <div class="col-md-12">
             <div  id="loginForm" class="bg-white">
@@ -67,7 +48,7 @@
 
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <input id="name" type="text" PLACEHOLDER="Zugangscode" class="form-control same-height @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                            <input id="name" type="text" PLACEHOLDER="tak tak code" class="form-control same-height @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
                             @error('name')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -93,7 +74,7 @@
 
                     <div class="row mb-0">
                         <div class="col-md-12">
-                            <button type="submit" class="btn btn-primary same-height" style="background-color: #009BD5; width:100%; border-radius: 7px; padding: 0px 14px;">{{ __('Anmelden') }}</button>
+                            <button type="submit" class="btn btn-primary same-height" style="background-color: #009BD5; width:100%; border-radius: 7px; padding: 0px 14px;">{{ __('Sign in') }}</button>
                         </div>
                     </div>
                 </form>

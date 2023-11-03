@@ -6,7 +6,7 @@ import axios from 'axios'
 import { createVfm } from 'vue-final-modal'
 import 'vue-final-modal/style.css'
 import '../sass/app.scss'
-
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import App from './components/App.vue'
 import router from './router'
 

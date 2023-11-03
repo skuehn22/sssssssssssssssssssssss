@@ -70,7 +70,7 @@ import OnTourAuswertung from './components/OnTourAuswertung.vue'
 const routes = [
 
     // STUDENTS
-    { path: '/home', component: Start, meta: { title: 'Übersicht' } },
+    { path: '/home', component: Start, meta: { title: 'Tak Tak' } },
     { path: '/overview', component: Overview, meta: { title: 'Aufgaben' } },
     { path: '/einleitung', component: Einleitung, name: 'einleitung', meta: { title: 'Einleitung' } },
     { path: '/drehorte', component: Drehorte, name: 'drehorte', meta: { title: 'Drehorte' } },

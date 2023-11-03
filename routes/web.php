@@ -18,11 +18,13 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-Route::get('/notes', [App\Http\Controllers\NoteController::class, 'index']);
+Route::get('/notes', [App\Http\Controllers\NoteController::class, 'addNote']);
 Route::get('/api/topics', [App\Http\Controllers\NoteController::class, 'index']);
-Route::post('/notes', [App\Http\Controllers\NoteController::class, 'store']);
+Route::post('/store/notes', [App\Http\Controllers\NoteController::class, 'addNote']);
 Route::put('/notes/{note}', [App\Http\Controllers\NoteController::class, 'update']);
 Route::delete('/notes/{note}', [App\Http\Controllers\NoteController::class, 'destroy']);
+Route::post('/api/store/topics', [App\Http\Controllers\NoteController::class, 'storeTopic']);
+Route::delete('/api/topics/{topic}', [App\Http\Controllers\NoteController::class, 'destroyTopic']);
 
 Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

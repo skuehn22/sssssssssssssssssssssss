@@ -62,4 +62,44 @@ class NoteController extends Controller
         $note->delete();
         return response()->json(null, 204);
     }
+
+    public function addNote(Request $request)
+    {
+        // Validate the incoming data
+        $validatedData = $request->validate([
+            'content' => 'required|string',
+            'topic_id' => 'required|exists:topics,id' // Ensure the topic exists
+        ]);
+
+        // Create a new note
+        $note = new Note();
+
+        $note->content = $validatedData['content'];
+        $note->topic_id = $validatedData['topic_id'];
+        $note->save();
+
+        // Optionally, you can load the topic relationship to return with the note
+        $note->load('topic');
+
+        return response()->json($note, 201); // 201 status code for resource creation
+    }
+
+    public function storeTopic(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255', // Validation rules
+        ]);
+
+        $topic = new Topic();
+        $topic->name = $request->name;
+        $topic->save();
+
+        return response()->json($topic, 201); // Return the created topic with HTTP status 201 (Created)
+    }
+
+    public function destroyTopic(Topic $topic)
+    {
+        $topic->delete();
+        return response()->json(null, 204); // No content response
+    }
 }

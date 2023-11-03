@@ -16,7 +16,7 @@
             </div>
         </nav>
 
-        <main class="pt-4">
+        <main class="">
             <ModalsContainer />
             <router-view></router-view>
         </main>
