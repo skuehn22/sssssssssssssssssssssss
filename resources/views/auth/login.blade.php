@@ -42,7 +42,7 @@
     <div class="row justify-content-center align-items-center bg-white" style="height: 10vh;">
         <div class="col-12 text-center">
             <div class="my-auto">
-                <h1>Tak-Tak List App</h1> <!-- You can use h1-h6 depending on the importance and desired size -->
+                <h1>Tak-Tak List App <i class="fas fa-heart text-danger me-2" style="cursor:pointer;"></i></h1> <!-- You can use h1-h6 depending on the importance and desired size -->
             </div>
         </div>
     </div>
@@ -81,7 +81,7 @@
 
                     <div class="row mb-0">
                         <div class="col-md-12">
-                            <button type="submit" class="btn btn-primary same-height" style="background-color: #009BD5; width:100%; border-radius: 7px; padding: 0px 14px;">{{ __('Sign in') }}</button>
+                            <button type="submit" class="btn btn-primary same-height" style="background-color: #009BD5; width:100%; border-radius: 7px; padding: 0px 14px;">{{ __('Tak Tak Go') }}</button>
                         </div>
                     </div>
                 </form>

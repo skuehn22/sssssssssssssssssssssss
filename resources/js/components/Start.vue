@@ -49,26 +49,31 @@
                         </div>
                         <!-- Display the formatted date here -->
                         <div v-if="topic.date" class="topic-date pb-3">
-                            Date: {{ formatDate(topic.date) }}
+                            <strong>Date: {{ formatDate(topic.date) }}</strong>
                         </div>
 
 
                         <div v-if="activeTopic.id === 21 && averageNote !== null">
-                            <p>Average Rate: {{ averageNote.toFixed(2) }}</p>
+                            <p><strong>Average Rate: {{ averageNote.toFixed(2) }}</strong></p>
                         </div>
-                        <!-- Loop over notes in this topic -->
+
                         <div v-for="note in topic.notes" :key="note.id" class="mb-2 note-and-icons">
                             <div v-if="editingNoteId === note.id" class="d-flex align-items-center w-100">
-                                <!-- Edit input field and icons here -->
+                                <input v-model="editingContent" class="form-control form-control-sm me-2" style="flex-grow: 1;">
+                                <i class="fas fa-save text-success me-2" style="cursor:pointer;" @click="updateNote(note.id)"></i>
+                                <i class="fas fa-times text-secondary" style="cursor:pointer;" @click="cancelEdit()"></i>
                             </div>
                             <div v-else class="d-flex align-items-center w-100">
                                 <p class="mb-0 note-content flex-grow-1">{{ topic.id === 20 ? '- ' + note.content : note.content }}</p>
+                                <!-- ...icons... -->
                                 <span class="icon-container"> <!-- Updated class -->
             <i class="fas fa-edit text-primary me-2" style="cursor:pointer;" @click="editNote(note)"></i>
             <i class="fas fa-trash text-danger" style="cursor:pointer;" @click="deleteNote(note.id)"></i>
         </span>
                             </div>
                         </div>
+
+
 
 
                     </div>
