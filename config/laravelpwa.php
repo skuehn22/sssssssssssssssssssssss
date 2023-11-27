@@ -4,7 +4,7 @@ return [
     'name' => 'Tak Tak List App',
     'manifest' => [
         'name' => env('APP_NAME', 'Tak Tak List App'),
-        'short_name' => 'onTour',
+        'short_name' => 'Tak Tak',
         'start_url' => 'https://app.ontour.org',
         'background_color' => '#ffffff',
         'theme_color' => '#ffffff',

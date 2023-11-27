@@ -64,23 +64,22 @@
                                 <i class="fas fa-times text-secondary" style="cursor:pointer;" @click="cancelEdit()"></i>
                             </div>
                             <div v-else class="d-flex align-items-center w-100">
-                                <p class="mb-0 note-content flex-grow-1">{{ topic.id === 20 ? '- ' + note.content : note.content }}</p>
+                                <p class="mb-0 note-content flex-grow-1" @click="openNoteModal(note.content)">
+                                    {{ topic.id === 20 ? '- ' + note.content : note.content }}
+                                </p>
                                 <!-- ...icons... -->
                                 <span class="icon-container"> <!-- Updated class -->
-            <i class="fas fa-edit text-primary me-2" style="cursor:pointer;" @click="editNote(note)"></i>
-            <i class="fas fa-trash text-danger" style="cursor:pointer;" @click="deleteNote(note.id)"></i>
-        </span>
+                                    <i class="fas fa-edit text-primary me-2" style="cursor:pointer;" @click="editNote(note)"></i>
+                                    <i class="fas fa-trash text-danger" style="cursor:pointer;" @click="deleteNote(note.id)"></i>
+                                </span>
                             </div>
                         </div>
-
-
-
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <modal-content v-if="showNoteModal" :content="selectedNoteContent" @close="showNoteModal = false"></modal-content>
 </template>
 
 
@@ -89,9 +88,13 @@
 <script>
 import axios from "axios";
 import 'bootstrap/dist/js/bootstrap.bundle';
+import ModalContent from './ModalContent.vue';
 
 export default {
     name: 'Start',
+    components: {
+        ModalContent // Register the Modal component
+    },
     data() {
         return {
             topics: [],
@@ -113,6 +116,8 @@ export default {
             editingNoteId: null,
             editingContent: '',
             activeDropdownTopicId: null,
+            showNoteModal: false,
+            selectedNoteContent: '',
 
         }
     },
@@ -120,6 +125,10 @@ export default {
         this.fetchTopics();
     },
     methods: {
+        openNoteModal(content) {
+            this.selectedNoteContent = content;
+            this.showNoteModal = true;
+        },
         formatDate(dateString) {
             const event = new Date(dateString);
             const day = event.getDate().toString().padStart(2, '0');
